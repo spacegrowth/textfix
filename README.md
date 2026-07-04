@@ -43,22 +43,40 @@ Run the tests (each case is checked several times because the output is from an 
 ./test.sh 5
 ```
 
-## Install the front end
+## Install
 
-1. Build `textfix` (above). The plugin expects it at
-   `~/development/grammarbar/textfix` — adjust the `BIN=` line in
-   `textfix.1d.sh` if you put it elsewhere.
-2. Copy the plugin into your SwiftBar plugin folder and make it executable:
+One line — builds the engine and installs the SwiftBar plugin (re-run any time
+to update):
 
-   ```sh
-   cp textfix.1d.sh ~/.swiftbar/
-   chmod +x ~/.swiftbar/textfix.1d.sh
-   ```
+```sh
+curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/install.sh | bash
+```
 
-3. Grant SwiftBar **Accessibility** (System Settings → Privacy & Security →
-   Accessibility) so it can copy/paste on your behalf.
+Or from a local checkout:
+
+```sh
+./install.sh --local
+```
+
+The installer places two files in your SwiftBar plugin folder:
+
+- `textfix.1d.sh` — the plugin (menu-bar icon + hotkey)
+- `.lib/textfix` — the compiled engine (hidden so SwiftBar doesn't run it as a
+  stray plugin)
+
+Then, one-time setup:
+
+- Grant SwiftBar **Accessibility** (System Settings → Privacy & Security →
+  Accessibility) so it can copy/paste the selection.
+- Enable **Apple Intelligence** (needs macOS 26+ on Apple Silicon).
 
 Now select text in any app and press **⌘`** (or click **Fix** in the menu).
+
+To remove it:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/uninstall.sh | bash
+```
 
 ## Customizing the rules
 

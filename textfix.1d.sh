@@ -8,7 +8,10 @@
 # On trigger: save the clipboard, copy the selection, run it through the engine,
 # paste the result back, then restore the clipboard.
 
-BIN="$HOME/development/grammarbar/textfix"
+# The compiled engine is installed beside this plugin in a hidden .lib/ folder
+# (so SwiftBar doesn't try to run it as its own plugin). Resolve it relative to
+# this script so the plugin works wherever SwiftBar's plugin folder is.
+BIN="$(cd "$(dirname "$0")" && pwd)/.lib/textfix"
 CFG="$HOME/.config/textfix"
 action="$1"   # ""  -> draw menu ;  fix -> transform ;  edit -> rules file
 
