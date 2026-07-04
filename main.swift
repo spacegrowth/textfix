@@ -4,8 +4,8 @@ import FoundationModels
 // Reads text from stdin, corrects it using the on-device system language
 // model, and prints the result to stdout.
 //
-// Usage:  echo "some text" | textfix          (correct the text)
-//         textfix seed                        (create the rules file, no model)
+// Usage:  echo "some text" | grammarcheck          (correct the text)
+//         grammarcheck seed                        (create the rules file, no model)
 //
 // Only SystemLanguageModel.default is used. That model runs entirely on
 // device; this tool never touches Private Cloud Compute.
@@ -32,8 +32,8 @@ added sentences.
 """
 
 // Editable rules file, seeded with the default on first use so there is always
-// something to edit from the menu:  ~/.config/textfix/rules.txt
-let configDir = NSHomeDirectory() + "/.config/textfix"
+// something to edit from the menu:  ~/.config/grammarcheck/rules.txt
+let configDir = NSHomeDirectory() + "/.config/grammarcheck"
 let rulesFile = configDir + "/rules.txt"
 func seedRules() {
     try? FileManager.default.createDirectory(atPath: configDir, withIntermediateDirectories: true)

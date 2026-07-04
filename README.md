@@ -1,4 +1,4 @@
-# textfix
+# grammarcheck
 
 Fix the grammar and spelling of the selected text anywhere on macOS, using
 Apple's **on-device** language model. Select text in any app, press a hotkey,
@@ -15,7 +15,7 @@ and it's corrected in place. Nothing leaves the machine.
 | File | What it is |
 |------|------------|
 | `main.swift` | The engine. Reads text on stdin, corrects it, prints to stdout. |
-| `textfix.1d.sh` | A [SwiftBar](https://github.com/swiftbar/SwiftBar) plugin: menu-bar icon + global hotkey that drives the engine over the current selection. |
+| `grammarcheck.1d.sh` | A [SwiftBar](https://github.com/swiftbar/SwiftBar) plugin: menu-bar icon + global hotkey that drives the engine over the current selection. |
 | `test.sh` | Invariant tests (no em dashes, no delimiter leaks, no refusals, voice preserved). |
 
 ## Requirements
@@ -27,13 +27,13 @@ and it's corrected in place. Nothing leaves the machine.
 ## Build
 
 ```sh
-swiftc -O main.swift -o textfix
+swiftc -O main.swift -o grammarcheck
 ```
 
 Quick check:
 
 ```sh
-echo "i has went to the store and buyed three apple" | ./textfix
+echo "i has went to the store and buyed three apple" | ./grammarcheck
 # -> I have gone to the store and bought three apples.
 ```
 
@@ -49,7 +49,7 @@ One line — builds the engine and installs the SwiftBar plugin (re-run any time
 to update):
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/spacegrowth/grammarcheck/main/install.sh | bash
 ```
 
 Or from a local checkout:
@@ -60,8 +60,8 @@ Or from a local checkout:
 
 The installer places two files in your SwiftBar plugin folder:
 
-- `textfix.1d.sh` — the plugin (menu-bar icon + hotkey)
-- `.lib/textfix` — the compiled engine (hidden so SwiftBar doesn't run it as a
+- `grammarcheck.1d.sh` — the plugin (menu-bar icon + hotkey)
+- `.lib/grammarcheck` — the compiled engine (hidden so SwiftBar doesn't run it as a
   stray plugin)
 
 Then, one-time setup:
@@ -75,11 +75,11 @@ Now select text in any app and press **⌘`** (or click **Fix** in the menu).
 To remove it:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/spacegrowth/grammarcheck/main/uninstall.sh | bash
 ```
 
 ## Customizing the rules
 
-The correction rules live in `~/.config/textfix/rules.txt`, seeded with the
+The correction rules live in `~/.config/grammarcheck/rules.txt`, seeded with the
 default on first run. Edit it (or use **Edit rules…** in the menu) and the next
 run picks it up. Delete the file to reset to the default.

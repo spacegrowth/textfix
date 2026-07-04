@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-# Installer for the "textfix" SwiftBar plugin (on-device grammar fixer).
+# Installer for the "grammarcheck" SwiftBar plugin (on-device grammar fixer).
 #
 # One-liner:
-#   curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/spacegrowth/grammarcheck/main/install.sh | bash
 #
 # Re-run any time to update to the latest version. Idempotent.
 #
 # It builds the engine from main.swift and installs both files into SwiftBar's
 # plugin folder:
-#   $DIR/textfix.1d.sh   ← the plugin (menu-bar icon + global hotkey)
-#   $DIR/.lib/textfix    ← the compiled engine (hidden in .lib/ so SwiftBar
+#   $DIR/grammarcheck.1d.sh   ← the plugin (menu-bar icon + global hotkey)
+#   $DIR/.lib/grammarcheck    ← the compiled engine (hidden in .lib/ so SwiftBar
 #                          doesn't run it as its own stray "?" menu-bar plugin)
 set -euo pipefail
 
-REPO="spacegrowth/textfix"
-PLUGIN="textfix.1d.sh"
+REPO="spacegrowth/grammarcheck"
+PLUGIN="grammarcheck.1d.sh"
 TARBALL="https://github.com/${REPO}/archive/refs/heads/main.tar.gz"
 BUNDLE_ID="com.ameba.SwiftBar"
 
@@ -34,7 +34,7 @@ for arg in "$@"; do
   esac
 done
 
-bold "Installing the textfix SwiftBar plugin…"
+bold "Installing the grammarcheck SwiftBar plugin…"
 
 # ── prerequisites ────────────────────────────────────────────────
 [ "$(uname)" = "Darwin" ] || die "macOS only."
@@ -65,13 +65,13 @@ fi
 mkdir -p "$DIR/.lib"
 
 # ── resolve source: local checkout (--local) or download main ────
-# Both paths end with $SRC holding main.swift + textfix.1d.sh, so the
+# Both paths end with $SRC holding main.swift + grammarcheck.1d.sh, so the
 # build + place-the-files steps below are identical regardless of source.
 if [ "$LOCAL" -eq 1 ]; then
   SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   bold "Installing from local checkout: $SRC"
 else
-  TMPD="$(mktemp -d "${TMPDIR:-/tmp}/textfix.XXXXXX")"
+  TMPD="$(mktemp -d "${TMPDIR:-/tmp}/grammarcheck.XXXXXX")"
   trap 'rm -rf "$TMPD"' EXIT
   bold "Downloading latest…"
   curl -fsSL "$TARBALL" | tar -xz -C "$TMPD" --strip-components=1 \
@@ -84,15 +84,15 @@ fi
 
 # ── build the engine (into a temp file, so a failure changes nothing) ──
 bold "Building the engine…"
-BUILT="$(mktemp "${TMPDIR:-/tmp}/textfix-bin.XXXXXX")"
+BUILT="$(mktemp "${TMPDIR:-/tmp}/grammarcheck-bin.XXXXXX")"
 swiftc -O "$SRC/main.swift" -o "$BUILT" || die "Build failed."
 strip -x "$BUILT" 2>/dev/null || true   # drop debug symbols / build paths
 
 # ── place the files ──────────────────────────────────────────────
 cp "$SRC/$PLUGIN" "$DIR/$PLUGIN"; chmod +x "$DIR/$PLUGIN"
-cp "$BUILT" "$DIR/.lib/textfix"; chmod +x "$DIR/.lib/textfix"
+cp "$BUILT" "$DIR/.lib/grammarcheck"; chmod +x "$DIR/.lib/grammarcheck"
 rm -f "$BUILT"
-ok "Installed → $DIR/$PLUGIN  (+ $DIR/.lib/textfix)"
+ok "Installed → $DIR/$PLUGIN  (+ $DIR/.lib/grammarcheck)"
 
 # ── nudge SwiftBar to reload ─────────────────────────────────────
 open "swiftbar://refreshallplugins" >/dev/null 2>&1 || open -a SwiftBar >/dev/null 2>&1 || true

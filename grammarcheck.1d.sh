@@ -11,8 +11,8 @@
 # The compiled engine is installed beside this plugin in a hidden .lib/ folder
 # (so SwiftBar doesn't try to run it as its own plugin). Resolve it relative to
 # this script so the plugin works wherever SwiftBar's plugin folder is.
-BIN="$(cd "$(dirname "$0")" && pwd)/.lib/textfix"
-CFG="$HOME/.config/textfix"
+BIN="$(cd "$(dirname "$0")" && pwd)/.lib/grammarcheck"
+CFG="$HOME/.config/grammarcheck"
 action="$1"   # ""  -> draw menu ;  fix -> transform ;  edit -> rules file
 
 copy_selection() { osascript -e 'tell application "System Events" to keystroke "c" using command down'; }

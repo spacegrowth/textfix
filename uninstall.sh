@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Uninstaller for the "textfix" SwiftBar plugin.
+# Uninstaller for the "grammarcheck" SwiftBar plugin.
 #
-#   curl -fsSL https://raw.githubusercontent.com/spacegrowth/textfix/main/uninstall.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/spacegrowth/grammarcheck/main/uninstall.sh | bash
 #
 # Removes the plugin and its engine. By default it KEEPS your rules at
-# ~/.config/textfix. Pass --purge to delete that too.
+# ~/.config/grammarcheck. Pass --purge to delete that too.
 set -euo pipefail
 
-PLUGIN="textfix.1d.sh"
+PLUGIN="grammarcheck.1d.sh"
 BUNDLE_ID="com.ameba.SwiftBar"
-CFG_DIR="$HOME/.config/textfix"
+CFG_DIR="$HOME/.config/grammarcheck"
 
 ok()   { printf '\033[32m✓\033[0m %s\n' "$*"; }
 warn() { printf '\033[33m!\033[0m %s\n' "$*"; }
@@ -22,7 +22,7 @@ DIR="$(defaults read "$BUNDLE_ID" PluginDirectory 2>/dev/null || true)"
 
 removed=0
 if [ -e "$DIR/$PLUGIN" ];   then rm -f "$DIR/$PLUGIN";   ok "Removed $DIR/$PLUGIN"; removed=1; fi
-if [ -e "$DIR/.lib/textfix" ]; then rm -f "$DIR/.lib/textfix"; ok "Removed $DIR/.lib/textfix"; removed=1; fi
+if [ -e "$DIR/.lib/grammarcheck" ]; then rm -f "$DIR/.lib/grammarcheck"; ok "Removed $DIR/.lib/grammarcheck"; removed=1; fi
 rmdir "$DIR/.lib" 2>/dev/null || true          # drop .lib/ if now empty (leave it if other tools use it)
 [ "$removed" = "1" ] || warn "No plugin found in $DIR"
 

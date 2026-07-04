@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# Invariant tests for the textfix engine. The output comes from an LLM, so we
+# Invariant tests for the grammarcheck engine. The output comes from an LLM, so we
 # do NOT assert exact strings — we assert invariants that must ALWAYS hold, and
 # run each case several times to catch nondeterministic failures.
 #
 # Usage:  ./test.sh [runs]        (default 3 runs per case)
 
 cd "$(dirname "$0")" || exit 2
-BIN=./textfix
+BIN=./grammarcheck
 RUNS=${1:-3}
 pass=0; fail=0
 
@@ -40,7 +40,7 @@ run() {
   done
 }
 
-echo "textfix invariant tests — $RUNS run(s) per case"
+echo "grammarcheck invariant tests — $RUNS run(s) per case"
 echo
 
 #     name          input                                                                voice-token
