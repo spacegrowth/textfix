@@ -18,11 +18,13 @@ action="$1"   # ""  -> draw menu ;  fix -> transform ;  edit -> rules file
 copy_selection() { osascript -e 'tell application "System Events" to keystroke "c" using command down'; }
 paste_result()   { osascript -e 'tell application "System Events" to keystroke "v" using command down'; }
 
-# Soft sound feedback: a tick when the model starts, a pop when text is pasted.
-# To silence: set VOL=0, or delete the two afplay lines below.
+# Optional sound feedback: a tick when the model starts, a pop when text is
+# pasted. OFF by default — toggle it from the menu ("Sounds"). Enabled only when
+# the flag file exists.
 VOL=0.3
-sound_start() { afplay -v "$VOL" /System/Library/Sounds/Tink.aiff >/dev/null 2>&1 & }
-sound_done()  { afplay -v "$VOL" /System/Library/Sounds/Pop.aiff  >/dev/null 2>&1 & }
+sounds_on()   { [ -f "$CFG/sounds_on" ]; }
+sound_start() { sounds_on || return 0; afplay -v "$VOL" /System/Library/Sounds/Tink.aiff >/dev/null 2>&1 & }
+sound_done()  { sounds_on || return 0; afplay -v "$VOL" /System/Library/Sounds/Pop.aiff  >/dev/null 2>&1 & }
 
 # Visual "working" cue: while the model runs, show a small black dot next to the
 # icon. We flip a flag file and ask SwiftBar to re-render this plugin; the
@@ -60,6 +62,12 @@ if [ "$action" = "edit" ]; then
   exit 0
 fi
 
+# ---- toggle sound feedback on/off ----
+if [ "$action" = "toggle-sound" ]; then
+  if sounds_on; then rm -f "$CFG/sounds_on"; else mkdir -p "$CFG"; : > "$CFG/sounds_on"; fi
+  exit 0
+fi
+
 # ---- draw the menu ----
 # Icon rendered inline as an SF Symbol with an outline/fill pair: outline when
 # idle, filled (and green) while working. Both variants are the same width, so
@@ -73,5 +81,10 @@ echo "---"
 echo 'Grammar Check | shortcut=CMD+` bash='"$0"' param1=fix terminal=false refresh=false'
 echo "---"
 echo "Edit rules… | bash=$0 param1=edit terminal=false refresh=false"
+if sounds_on; then
+  echo "Sounds: on | bash=$0 param1=toggle-sound terminal=false refresh=true"
+else
+  echo "Sounds: off | bash=$0 param1=toggle-sound terminal=false refresh=true"
+fi
 echo "---"
 echo "Select text, then press ⌘\` or click Grammar Check."
