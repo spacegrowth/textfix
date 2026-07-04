@@ -70,8 +70,8 @@ else
   echo ":text.bubble: | size=14"
 fi
 echo "---"
-echo 'Fix | shortcut=CMD+` bash='"$0"' param1=fix terminal=false refresh=false'
+echo 'Grammar Check | shortcut=CMD+` bash='"$0"' param1=fix terminal=false refresh=false'
 echo "---"
 echo "Edit rules… | bash=$0 param1=edit terminal=false refresh=false"
 echo "---"
-echo "Select text, then press ⌘\` or click Fix."
+echo "Select text, then press ⌘\` or click Grammar Check."
