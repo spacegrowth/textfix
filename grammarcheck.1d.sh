@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# SwiftBar plugin: fix the grammar/spelling of the currently selected text in
-# place, using an on-device language model. It keeps your wording and voice and
-# only nudges wording when something is clearly wrong.
+# SwiftBar plugin: polish the currently selected text in place using an
+# on-device language model. Fixes mechanics, improves clarity and flow, and
+# keeps the writer's voice.
 #
 # Trigger it two ways: click "Fix" in the menu, or press the global hotkey.
 # On trigger: save the clipboard, copy the selection, run it through the engine,
